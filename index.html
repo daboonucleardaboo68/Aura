@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aura</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.51.0/min/vs/editor/editor.main.min.css">
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    <div class="title-bar">
+      <div class="title-bar-drag">
+        <span class="app-title">Aura</span>
+      </div>
+      <div class="window-controls">
+        <div class="control-btn" id="min-btn"><i class='bx bx-minus'></i></div>
+        <div class="control-btn" id="close-btn"><i class='bx bx-x'></i></div>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <div class="sidebar-icons">
+        <div class="icon-btn active" data-tab="scripts" title="Scripts">
+          <i class='bx bx-code-alt'></i>
+        </div>
+        <div class="icon-btn" data-tab="console" title="Console">
+          <i class='bx bx-terminal'></i>
+        </div>
+        <div class="icon-btn" data-tab="scripthub" title="Script Hub">
+          <i class='bx bx-book'></i>
+        </div>
+        <div class="icon-btn" data-tab="autoexec" title="Auto Execute">
+          <i class='bx bxs-bolt'></i>
+        </div>
+        <div class="spacer"></div>
+        <div class="icon-btn" data-tab="settings" title="Settings">
+          <i class='bx bx-cog'></i>
+        </div>
+      </div>
+
+      <div class="main-panel">
+        <div class="tab-content active" id="tab-scripts">
+          <div class="scripts-layout">
+            <div class="file-sidebar">
+              <div class="file-sidebar-header">
+                <span>Files</span>
+                <div class="file-actions">
+                  <button class="file-action-btn" id="new-file-btn" title="New File"><i class='bx bx-file-blank'></i></button>
+                  <button class="file-action-btn" id="new-folder-btn" title="New Folder"><i class='bx bx-folder-plus'></i></button>
+                </div>
+              </div>
+              <div class="file-tree" id="file-tree"></div>
+            </div>
+
+            <div class="editor-section">
+              <div class="tabs-bar">
+                <div class="tabs-container" id="tabs-container"></div>
+                <button class="add-tab-btn" id="add-tab-btn" title="New Tab"><i class='bx bx-plus'></i></button>
+              </div>
+              <div class="editor-container" id="editor-container"></div>
+              
+              <div class="bottom-bar">
+                <div class="status-area">
+                  <div class="executor-selector">
+                    <select id="executor-select">
+                      <option value="MacSploit">MacSploit</option>
+                      <option value="Opiumware">Opiumware</option>
+                      <option value="Hydrogen">Hydrogen</option>
+                    </select>
+                    <select id="port-selector"></select>
+                  </div>
+                  <div class="connection-indicator">
+                    <div class="status-dot" id="status-dot"></div>
+                    <span class="status-text" id="status-text">Disconnected</span>
+                  </div>
+                </div>
+                <div class="action-buttons">
+                  <button class="action-btn" id="open-roblox-btn">
+                    <i class='bx bx-link-external'></i> <span>Open Roblox</span>
+                  </button>
+                  <button class="action-btn primary" id="execute-btn">
+                    <i class='bx bx-play'></i> <span>Execute</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-content" id="tab-settings">
+          <div class="settings-panel">
+            <div class="settings-section">
+              <div class="settings-section-title">Storage</div>
+              <div class="settings-row">
+                <div class="settings-row-info">
+                  <div class="settings-label">Scripts Folder</div>
+                  <div class="settings-desc" id="scripts-path">~/Aura/Scripts</div>
+                </div>
+                <button class="settings-btn" id="open-scripts-folder">Open</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+      <div class="modal-title" id="modal-title">Enter name</div>
+      <input type="text" class="modal-input" id="modal-input">
+      <div class="modal-buttons">
+        <button class="modal-btn" id="modal-cancel">Cancel</button>
+        <button class="modal-btn primary" id="modal-ok">OK</button>
+      </div>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+
+  <script>
+    window.nodeRequire = require;
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.51.0/min/vs/loader.min.js"></script>
+  <script>
+    require.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.51.0/min/vs' }});
+    window.MonacoEnvironment = { getWorkerUrl: () => `data:text/javascript;charset=utf-8,${encodeURIComponent(`self.MonacoEnvironment = { baseUrl: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.51.0/min/' }; importScripts('https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.51.0/min/vs/base/worker/workerMain.js');`)}` };
+  </script>
+  <script src="renderer.js"></script>
+</body>
+</html>
